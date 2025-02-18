@@ -74,23 +74,25 @@ const VapiCalculator = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 p-6 flex flex-col items-center justify-center">
-      <div className="w-full max-w-4xl bg-white bg-opacity-95 backdrop-blur-lg rounded-3xl shadow-2xl p-8">
-        <h1 className="text-4xl font-bold text-center mb-2 bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text">
-          Vapi AI
-        </h1>
-        <h2 className="text-xl text-center mb-8 text-gray-600">
-          Calculadora de Costos
-        </h2>
+    <div className="min-h-screen bg-gradient-to-br from-green-900 via-gray-900 to-black p-6 flex flex-col items-center justify-center">
+      {/* Título fuera del contenedor principal */}
+      <h1 className="text-4xl font-bold text-center mb-2 text-white">
+        Vapi AI
+      </h1>
+      <h2 className="text-xl text-center mb-8 text-white/80">
+        Calculadora de Costos
+      </h2>
 
+      {/* Contenedor principal */}
+      <div className="w-full max-w-4xl bg-black bg-opacity-40 backdrop-blur-lg rounded-3xl shadow-2xl p-8 border border-green-500/20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {/* Minutos */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">Minutos</label>
+            <label className="block text-sm font-medium text-green-300">Minutos</label>
             <div className="flex items-center space-x-2">
               <button
                 onClick={() => setMinutes(Math.max(0, minutes - 10))}
-                className="bg-blue-100 hover:bg-blue-200 text-blue-600 font-bold py-2 px-4 rounded-lg transition-colors"
+                className="bg-green-900/50 hover:bg-green-800/50 text-green-400 font-bold py-2 px-4 rounded-lg transition-colors border border-green-700/50"
               >
                 -
               </button>
@@ -98,12 +100,12 @@ const VapiCalculator = () => {
                 type="number"
                 value={minutes}
                 onChange={(e) => setMinutes(Math.max(0, Number(e.target.value)))}
-                className="w-full px-3 py-2 border rounded-lg shadow-sm text-gray-700 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 bg-black/50 border border-green-700/50 rounded-lg shadow-sm text-green-100 focus:ring-1 focus:ring-green-500 focus:border-green-500 placeholder-green-700"
                 placeholder="Minutos"
               />
               <button
                 onClick={() => setMinutes(minutes + 10)}
-                className="bg-blue-100 hover:bg-blue-200 text-blue-600 font-bold py-2 px-4 rounded-lg transition-colors"
+                className="bg-green-900/50 hover:bg-green-800/50 text-green-400 font-bold py-2 px-4 rounded-lg transition-colors border border-green-700/50"
               >
                 +
               </button>
