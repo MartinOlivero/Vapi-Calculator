@@ -3,7 +3,75 @@
 import React, { useState, useEffect } from 'react';
 
 const VapiCalculator = () => {
-  // ... [Todo el código de estado y lógica se mantiene igual] ...
+  const [mounted, setMounted] = useState(false);
+  const [minutes, setMinutes] = useState(100);
+  const [voiceProvider, setVoiceProvider] = useState('elevenlabs');
+  const [telephonyProvider, setTelephonyProvider] = useState('deepgram');
+  const [llmProvider, setLlmProvider] = useState('gpt4o-mini-cluster');
+  const [automation, setAutomation] = useState(0);
+  const [crm, setCrm] = useState(0);
+  const [profit, setProfit] = useState(30);
+  const [totalCost, setTotalCost] = useState(0);
+  const [extraCosts, setExtraCosts] = useState([]);
+
+  // Definimos los costos base
+  const costs = {
+    voice: {
+      cartesia: 0.022,
+      elevenlabs: 0.036,
+      deepgram: 0.011,
+      openai: 0.011,
+      azure: 0.011
+    },
+    telephony: {
+      deepgram: 0.01,
+      talkscriber: 0.011,
+      azure: 0.017
+    },
+    llm: {
+      'gpt4o-mini-cluster': 0.01,
+      'gpt4o-cluster': 0.02,
+      'gpt4o-mini-realtime': 0.10,
+      'gpt4o-realtime': 0.38,
+      'gpt3o-mini-cluster': 0.03
+    }
+  };
+
+  const calculateTotal = () => {
+    if (!mounted) return;
+
+    const voiceCost = minutes * costs.voice[voiceProvider];
+    const telephonyCost = minutes * costs.telephony[telephonyProvider];
+    const llmCost = minutes * costs.llm[llmProvider];
+    const extraCostsTotal = extraCosts.reduce((sum, cost) => {
+      const amount = Number(cost.amount);
+      return sum + (cost.type === 'perMinute' ? amount * minutes : amount);
+    }, 0);
+    
+    const subtotal = voiceCost + telephonyCost + llmCost + Number(automation) + Number(crm) + extraCostsTotal;
+    const profitAmount = subtotal * (profit / 100);
+    const total = subtotal + profitAmount;
+    
+    setTotalCost(total);
+  };
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (mounted) {
+      calculateTotal();
+    }
+  }, [mounted, minutes, voiceProvider, telephonyProvider, llmProvider, automation, crm, profit, extraCosts]);
+
+  const addExtraCost = () => {
+    setExtraCosts([...extraCosts, { description: '', amount: 0, type: 'fixed' }]);
+  };
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-900 via-gray-900 to-black p-6 flex flex-col items-center justify-center">
